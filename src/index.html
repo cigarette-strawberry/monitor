@@ -7,57 +7,60 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>前端监控SDK</title>
-  </head>
+</head>
 
-  <body>
-    <div id="container">
-      <div class="content">
-        <input id="errorBtn" type="button" value="点击抛出错误" onclick="errorClick()" />
-        <input id="promiseBtn" type="button" value="点击抛出Promise错误" onclick="promiseErrorClick()" />
+<body>
+<div id="container">
+    <div class="content">
+        <input id="errorBtn" type="button" value="点击抛出错误" onclick="errorClick()"/>
+        <input id="promiseBtn" type="button" value="点击抛出Promise错误" onclick="promiseErrorClick()"/>
 
-        <input id="ajaxSuccessBtn" type="button" value="Ajax成功请求" onclick="sendSuccess()" />
-        <input id="ajaxErrorBtn" type="button" value="Ajax失败请求" onclick="sendError()" />
-      </div>
+        <input id="ajaxSuccessBtn" type="button" value="Ajax成功请求" onclick="sendSuccess()"/>
+        <input id="ajaxErrorBtn" type="button" value="Ajax失败请求" onclick="sendError()"/>
     </div>
-    <script>
-      function errorClick() {
+</div>
+<script>
+    function errorClick() {
         window.someVar.error = 'error'
-      }
-      function promiseErrorClick() {
-        new Promise(function (resolve, reject) {
-          window.someVar.error = 'error'
-        })
-      }
+    }
 
-      function sendSuccess() {
+    function promiseErrorClick() {
+        new Promise(function (resolve, reject) {
+            window.someVar.error = 'error'
+        })
+    }
+
+    function sendSuccess() {
         let xhr = new XMLHttpRequest()
         xhr.open('GET', '/success', true)
         xhr.responseType = 'json'
         xhr.onload = function () {
-          console.log(xhr.response)
+            console.log(xhr.response)
         }
-        xhr.onerror = function () {
-          console.log('error')
+        xhr.onerror = function (error) {
+            console.log('GETerror' + error)
         }
         xhr.send()
-      }
-      function sendError() {
+    }
+
+    function sendError() {
         let xhr = new XMLHttpRequest()
         xhr.open('POST', '/error', true)
         xhr.responseType = 'json'
         xhr.onload = function () {
-          console.log(xhr.response)
+            console.log(xhr.response)
         }
         xhr.onerror = function (error) {
-          console.log(error)
+            console.log('POSTerror' + error)
         }
         xhr.send('name=xiaowu')
-      }
-    </script>
-    <script defer src="aaa.js"></script>
-  </body>
+    }
+</script>
+<!-- 监控加载资源错误 -->
+<!--    <script defer src="aaa.js"></script>-->
+</body>
 </html>
