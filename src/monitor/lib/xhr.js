@@ -3,7 +3,7 @@
  * @Author: 吴晨
  * @Date: 2023-08-14 20:44:55
  * @LastEditors: 吴晨
- * @LastEditTime: 2023-08-15 10:50:46
+ * @LastEditTime: 2023-08-16 15:19:17
 */
 import tracker from '../utils/tracker'
 
@@ -16,10 +16,14 @@ export function injectXHR() {
         }
         return oldOpen.apply(this, arguments)
     }
+    // axios 背后有两种  1、browser XMLHttpRequest
+    //                  2、node http
     let oldSend = XMLHttpRequest.prototype.send
     XMLHttpRequest.prototype.send = function (body) {
         if (this.logData) {
             let startTime = Date.now() // 发送前，记录开始时间
+            // XMLHttpRequest readyState 0 1 2 3 4
+            // status 2xx 304 成功 其它就是失败
             let handler = (type) => (event) => {
                 let duration = Date.now() - startTime
                 let status = this.status // 200 500
