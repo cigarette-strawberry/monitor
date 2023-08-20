@@ -21,6 +21,8 @@
 
         <input id="ajaxSuccessBtn" type="button" value="Ajax成功请求" onclick="sendSuccess()"/>
         <input id="ajaxErrorBtn" type="button" value="Ajax失败请求" onclick="sendError()"/>
+
+        <button id="clickBtn" onclick="clickBtn()">点我</button>
     </div>
 </div>
 <script>
@@ -59,8 +61,35 @@
         }
         xhr.send('name=xiaowu')
     }
+
+    /*// DOM解析完成，即使依赖的资源没有加载完成，也会触发这个事件
+    document.addEventListener('DOMContentLoaded', function () {
+        let start = Date.now()
+        while ((Date.now() - start) < 1000) {
+        }
+    })
+    document.addEventListener('load', function () {
+        let start = Date.now()
+        while ((Date.now() - start) < 3000) {
+        }
+    })*/
+
+    setTimeout(() => {
+        let content = document.querySelector('.content')
+        let h1 = document.createElement('h1')
+        h1.innerHTML = 'hello world'
+        h1.setAttribute('elementtiming', 'meaningful')
+        content.appendChild(h1)
+    }, 2000)
+
+    function clickBtn() {
+        let start = Date.now()
+        while ((Date.now() - start) < 1000) {
+        }
+    }
 </script>
 <!-- 监控加载资源错误 -->
 <!--    <script defer src="aaa.js"></script>-->
 </body>
 </html>
+<!--
